@@ -3,11 +3,11 @@
   []
   (filter |(not (string/find "/" $)) (all-bindings)))
 
-(defn module-bindings
+(defmacro module-bindings
   "Return a list of bindings for a module in (all-bindings)"
   [module]
-  (filter |(string/has-prefix? (string module "/") $)
-          (all-bindings)))
+  ~(filter |(string/has-prefix? (string ',module "/") $)
+           (all-bindings)))
 
 (def- module-grammar
   (peg/compile '{:module-path (* (some (* (! "/") 1))
